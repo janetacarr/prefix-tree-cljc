@@ -19,5 +19,17 @@
                                       cider/piggieback {:mvn/version "0.5.2"}}
                          :extra-paths ["src"
                                        "test"]
-                         :main-opts ["-m" "shadow.cljs.devtools.cli"]}}
+                         :main-opts ["-m" "shadow.cljs.devtools.cli"]}
+
+           ;; This can be a global alias inside ~/.clojure/deps.edn, doesn't contain anything specific
+           ;; to this project
+           :storm {:classpath-overrides {org.clojure/clojure nil}
+                   :extra-deps {com.github.flow-storm/clojure {:mvn/version "1.11.3"}
+                                com.github.flow-storm/flow-storm-dbg {:mvn/version "3.15.5"}}
+                   :jvm-opts ["-Dclojure.storm.instrumentEnable=true"
+                              "-Dclojure.storm.instrumentAutoPrefixes=true"
+                              ;; this will work if you have started your emacs server with M-x server-start
+                              "-Dflowstorm.jarEditorCommand=emacsclient -n +<<LINE>>:0 <<JAR>>/<<FILE>>"
+                              "-Dflowstorm.fileEditorCommand=emacsclient -n +<<LINE>>:0 <<FILE>>"]}
+           }
  :mvn/repos {"github" {:url "https://maven.pkg.github.com/janetacarr/prefix-tree-cljc"}}}
